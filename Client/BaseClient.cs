@@ -12,7 +12,7 @@ namespace Twitchbot.Base.Client
 {
     public class ClientBase
     {
-        private static readonly HttpClient _client = new HttpClient();
+        private HttpClient _client;
         private readonly ILogger<ClientBase> _logger;
         private readonly IStringLocalizer<ClientBase> _localizer;
 
@@ -20,6 +20,7 @@ namespace Twitchbot.Base.Client
         {
             _logger = logger;
             _localizer = localizer;
+            _client = new HttpClient();
         }
 
         public async Task<HttpResultModel<TOut>> PerformRequest<TIn, TOut>(string uri, HttpMethod method, TIn content = default, Dictionary<string, string> headers = default) where TOut : class where TIn : class
@@ -62,7 +63,7 @@ namespace Twitchbot.Base.Client
             }
         }
 
-        private static async Task<HttpResponseMessage> Execute(string uri, HttpMethod method, HttpResponseMessage response, StringContent serialized)
+        private async Task<HttpResponseMessage> Execute(string uri, HttpMethod method, HttpResponseMessage response, StringContent serialized)
         {
             switch (method)
             {
