@@ -12,7 +12,7 @@ namespace Twitchbot.Base.Client
 {
     public class ClientBase
     {
-        private HttpClient _client;
+        private readonly HttpClient _client;
         private readonly ILogger<ClientBase> _logger;
         private readonly IStringLocalizer<ClientBase> _localizer;
 
