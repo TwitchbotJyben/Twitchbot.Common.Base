@@ -2,7 +2,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <PackageId>Twitchbot.Base</PackageId>
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
         <Authors>Jyben</Authors>
         <Company>TwitchbotJyben</Company>
         <PackageDescription>Base of Twitchbot</PackageDescription>
