@@ -23,9 +23,9 @@ namespace Twitchbot.Base.Client
             _client = new HttpClient();
         }
 
-        public async Task<HttpResultModel<TOut>> PerformRequest<TIn, TOut>(string uri, HttpMethod method, TIn content = default, Dictionary<string, string> headers = default) where TOut : class where TIn : class
+        public async Task<HttpResultModel<TOut>> PerformRequest<TOut>(string uri, HttpMethod method, object content = default, Dictionary<string, string> headers = default) where TOut : class
         {
-            _logger.LogInformation("GetRequest. Uri: {0}", uri);
+            _logger.LogInformation("Request. Uri: {0}", uri);
 
             try
             {
@@ -33,11 +33,20 @@ namespace Twitchbot.Base.Client
 
                 HttpResponseMessage response = new HttpResponseMessage();
 
-                var serialized = content is null ? null : new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
-
-                _logger.LogInformation("Body : {0}", serialized);
-
-                response = await Execute(uri, method, response, serialized);
+                if (content is StringContent stringContent)
+                {
+                    _logger.LogInformation("Body : {0}", await stringContent.ReadAsStringAsync());
+                    response = await Execute(uri, method, response, stringContent);
+                }
+                else if (content is FormUrlEncodedContent formUrlEncodedContent)
+                {
+                    _logger.LogInformation("Body : {0}", await formUrlEncodedContent.ReadAsStringAsync());
+                    response = await Execute(uri, method, response, formUrlEncodedContent);
+                }
+                else
+                {
+                    response = await Execute(uri, method, response, stringContent : null);
+                }
 
                 response.EnsureSuccessStatusCode();
 
@@ -63,7 +72,7 @@ namespace Twitchbot.Base.Client
             }
         }
 
-        private async Task<HttpResponseMessage> Execute(string uri, HttpMethod method, HttpResponseMessage response, StringContent serialized)
+        private async Task<HttpResponseMessage> Execute(string uri, HttpMethod method, HttpResponseMessage response, StringContent stringContent)
         {
             switch (method)
             {
@@ -71,10 +80,33 @@ namespace Twitchbot.Base.Client
                     response = await _client.GetAsync(uri);
                     break;
                 case HttpMethod m when m == HttpMethod.Post:
-                    response = await _client.PostAsync(uri, serialized);
+                    response = await _client.PostAsync(uri, stringContent);
                     break;
                 case HttpMethod m when m == HttpMethod.Put:
-                    response = await _client.PutAsync(uri, serialized);
+                    response = await _client.PutAsync(uri, stringContent);
+                    break;
+                case HttpMethod m when m == HttpMethod.Delete:
+                    response = await _client.DeleteAsync(uri);
+                    break;
+                default:
+                    break;
+            }
+
+            return response;
+        }
+
+        private async Task<HttpResponseMessage> Execute(string uri, HttpMethod method, HttpResponseMessage response, FormUrlEncodedContent formUrlEncodedContent)
+        {
+            switch (method)
+            {
+                case HttpMethod m when m == HttpMethod.Get:
+                    response = await _client.GetAsync(uri);
+                    break;
+                case HttpMethod m when m == HttpMethod.Post:
+                    response = await _client.PostAsync(uri, formUrlEncodedContent);
+                    break;
+                case HttpMethod m when m == HttpMethod.Put:
+                    response = await _client.PutAsync(uri, formUrlEncodedContent);
                     break;
                 case HttpMethod m when m == HttpMethod.Delete:
                     response = await _client.DeleteAsync(uri);
