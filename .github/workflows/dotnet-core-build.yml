@@ -10,7 +10,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -19,7 +19,7 @@ jobs:
 
     - name: Setup NuGet Sources
       run: nuget sources add -Name "Github" -Source "https://nuget.pkg.github.com/twitchbotjyben/index.json" -UserName "Jyben" -Password "${{ secrets.GITHUB_TOKEN }}"
-      shell: sh
+      shell: cmd
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
