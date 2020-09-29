@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Twitchbot.Base.Middleware
+namespace Twitchbot.Common.Base.Middleware
 {
     public class RequestResponseLoggingMiddleware
     {

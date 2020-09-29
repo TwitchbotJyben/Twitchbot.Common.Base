@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <PackageId>Twitchbot.Base</PackageId>
-        <Version>1.0.6</Version>
+        <PackageId>Twitchbot.Common.Base</PackageId>
+        <Version>1.0.7</Version>
         <Authors>Jyben</Authors>
         <Company>TwitchbotJyben</Company>
         <PackageDescription>Base of Twitchbot</PackageDescription>
-        <RepositoryUrl>https://github.com/TwitchbotJyben/Twitchbot.Base</RepositoryUrl>
+        <RepositoryUrl>https://github.com/TwitchbotJyben/Twitchbot.Common.Base</RepositoryUrl>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="9.0.0"/>
@@ -18,6 +18,6 @@
         <PackageReference Include="Newtonsoft.Json" Version="12.0.3"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.4.1" />
         <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.4.1" />
-        <PackageReference Include="Twitchbot.Models" Version="1.0.7" />
+        <PackageReference Include="Twitchbot.Common.Models" Version="1.0.9" />
     </ItemGroup>
 </Project>

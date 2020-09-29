@@ -1,4 +1,4 @@
-namespace Twitchbot.Base.Models
+namespace Twitchbot.Common.Base.Models
 {
     public class HttpResultModel<T> where T : class
     {

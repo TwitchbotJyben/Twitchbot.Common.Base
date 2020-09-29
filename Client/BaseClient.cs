@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Twitchbot.Base.Models;
+using Twitchbot.Common.Base.Models;
 
-namespace Twitchbot.Base.Client
+namespace Twitchbot.Common.Base.Client
 {
     public class ClientBase
     {
