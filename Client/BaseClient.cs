@@ -64,6 +64,8 @@ namespace Twitchbot.Common.Base.Client
             }
             catch (HttpRequestException e)
             {
+                _logger.LogError("Exception ", e);
+
                 return new HttpResultModel<TOut>
                 {
                     Result = false,
