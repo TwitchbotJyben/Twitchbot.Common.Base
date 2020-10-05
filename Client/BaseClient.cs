@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
@@ -15,12 +14,18 @@ namespace Twitchbot.Common.Base.Client
         private readonly HttpClient _client;
         private readonly ILogger<ClientBase> _logger;
         private readonly IStringLocalizer<ClientBase> _localizer;
+        private List<string> ListAuthHeaders { get; set; }
 
         public ClientBase(ILogger<ClientBase> logger, IStringLocalizer<ClientBase> localizer)
         {
             _logger = logger;
             _localizer = localizer;
             _client = new HttpClient();
+            ListAuthHeaders = new List<string>()
+            {
+                "OAuth",
+                "Bearer"
+            };
         }
 
         public async Task<HttpResultModel<TOut>> PerformRequest<TOut>(string uri, HttpMethod method, object content = default, Dictionary<string, string> headers = default) where TOut : class
@@ -131,9 +136,9 @@ namespace Twitchbot.Common.Base.Client
             {
                 _logger.LogInformation("Headers. Key: {0}, Value: {1}", kvp.Key, kvp.Value);
 
-                if (kvp.Key == "Authorization")
+                if (ListAuthHeaders.Contains(kvp.Key))
                 {
-                    _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("OAuth", kvp.Value);
+                    _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(kvp.Key, kvp.Value);
                 }
                 else
                 {
