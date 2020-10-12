@@ -7,6 +7,7 @@
         <Company>TwitchbotJyben</Company>
         <PackageDescription>Base of Twitchbot</PackageDescription>
         <RepositoryUrl>https://github.com/TwitchbotJyben/Twitchbot.Common.Base</RepositoryUrl>
+        <ProjectGuid>{1a335c5b-80c2-419a-846e-7ceb1e355bd9}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="9.0.0"/>
