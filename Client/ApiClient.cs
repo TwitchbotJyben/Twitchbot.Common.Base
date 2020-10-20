@@ -5,18 +5,19 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Twitchbot.Common.Base.Interfaces;
 using Twitchbot.Common.Base.Models;
 
 namespace Twitchbot.Common.Base.Client
 {
-    public class ClientBase
+    public class ApiClient : IApiClient
     {
         private readonly HttpClient _client;
-        private readonly ILogger<ClientBase> _logger;
-        private readonly IStringLocalizer<ClientBase> _localizer;
+        private readonly ILogger<ApiClient> _logger;
+        private readonly IStringLocalizer<ApiClient> _localizer;
         private List<string> ListAuthHeaders { get; set; }
 
-        public ClientBase(ILogger<ClientBase> logger, IStringLocalizer<ClientBase> localizer)
+        public ApiClient(ILogger<ApiClient> logger, IStringLocalizer<ApiClient> localizer)
         {
             _logger = logger;
             _localizer = localizer;
