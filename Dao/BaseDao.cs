@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using Twitchbot.Common.Base.Interfaces;
 using Twitchbot.Common.Models.Data;
 using Twitchbot.Common.Models.Definitions;
 
 namespace Twitchbot.Common.Base.Dao
 {
-    public abstract class BaseDao<TEntity, TReadModel, TCreateModel, TUpdateModel> where TEntity : class, IHaveIdentifier, IBaseDao<TEntity, TReadModel, TCreateModel, TUpdateModel>
+    public abstract class BaseDao<TEntity, TReadModel, TCreateModel, TUpdateModel> where TEntity : class, IHaveIdentifier
     {
         protected BaseDao(TwitchbotContext dataContext, IMapper mapper)
         {
