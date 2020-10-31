@@ -7,17 +7,30 @@ using Microsoft.Extensions.Logging;
 
 namespace Twitchbot.Common.Base.Middleware
 {
+    /// <summary>
+    /// Middleware used to log http requests.
+    /// </summary>
     public class RequestResponseLoggingMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<RequestResponseLoggingMiddleware> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="RequestResponseLoggingMiddleware"/>
+        /// </summary>
+        /// <param name="next"></param>
+        /// <param name="logger"></param>
         public RequestResponseLoggingMiddleware(RequestDelegate next, ILogger<RequestResponseLoggingMiddleware> logger)
         {
             _next = next;
             _logger = logger;
         }
 
+        /// <summary>
+        /// Catches requests and log them.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext context)
         {
             context.Request.EnableBuffering();

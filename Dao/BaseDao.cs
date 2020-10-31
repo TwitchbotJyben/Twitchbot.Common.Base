@@ -12,8 +12,20 @@ using Twitchbot.Common.Models.Definitions;
 
 namespace Twitchbot.Common.Base.Dao
 {
+    /// <summary>
+    /// Provides CRUD methods on the database.
+    /// </summary>
+    /// <typeparam name="TEntity">The entity to update.</typeparam>
+    /// <typeparam name="TReadModel">The read model.</typeparam>
+    /// <typeparam name="TCreateModel">The create model.</typeparam>
+    /// <typeparam name="TUpdateModel">The update model.</typeparam>
     public abstract class BaseDao<TEntity, TReadModel, TCreateModel, TUpdateModel> where TEntity : class, IHaveIdentifier
     {
+        /// <summary>
+        /// Initializes a nex instance of <see cref="BaseDao{TEntity, TReadModel, TCreateModel, TUpdateModel}"/>.
+        /// </summary>
+        /// <param name="dataContext">The context.</param>
+        /// <param name="mapper">AutoMapper.</param>
         protected BaseDao(TwitchbotContext dataContext, IMapper mapper)
         {
             DataContext = dataContext;
@@ -24,6 +36,12 @@ namespace Twitchbot.Common.Base.Dao
 
         protected IMapper Mapper { get; }
 
+        /// <summary>
+        /// Read an entity model. 
+        /// </summary>
+        /// <param name="id">The primary key of <see cref="TEntity"/>.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>The model.</returns>
         public virtual async Task<TReadModel> ReadModel(int id, CancellationToken cancellationToken = default)
         {
             var dbSet = DataContext.Set<TEntity>();
@@ -37,6 +55,12 @@ namespace Twitchbot.Common.Base.Dao
             return model;
         }
 
+        /// <summary>
+        /// Create an entity model. 
+        /// </summary>
+        /// <param name="createModel">The model.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>The created model.</returns>
         public virtual async Task<TReadModel> CreateModel(TCreateModel createModel, CancellationToken cancellationToken = default)
         {
             var entity = Mapper.Map<TEntity>(createModel);
@@ -52,6 +76,13 @@ namespace Twitchbot.Common.Base.Dao
             return readModel;
         }
 
+        /// <summary>
+        /// Update an entity model. 
+        /// </summary>
+        /// <param name="id">The primary key of <see cref="TEntity"/>.</param>
+        /// <param name="updateModel">The model.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>The updated model.</returns>
         public virtual async Task<TReadModel> UpdateModel(int id, TUpdateModel updateModel, CancellationToken cancellationToken = default)
         {
             var keyValue = new object[] { id };
@@ -72,6 +103,12 @@ namespace Twitchbot.Common.Base.Dao
             return readModel;
         }
 
+        /// <summary>
+        /// Delete and entity model.
+        /// </summary>
+        /// <param name="id">The primary key of <see cref="TEntity"/>.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>The deleted model.</returns>
         public virtual async Task<TReadModel> DeleteModel(int id, CancellationToken cancellationToken = default)
         {
             var dbSet = DataContext.Set<TEntity>();
@@ -92,6 +129,12 @@ namespace Twitchbot.Common.Base.Dao
             return readModel;
         }
 
+        /// <summary>
+        /// Query an entity model with a predicate
+        /// </summary>
+        /// <param name="predicate">The predicate</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>The list of models.</returns>
         public virtual async Task<IReadOnlyList<TReadModel>> QueryModel(Expression<Func<TEntity, bool>> predicate = null, CancellationToken cancellationToken = default)
         {
             var dbSet = DataContext.Set<TEntity>();

@@ -10,6 +10,9 @@ using Twitchbot.Common.Base.Models;
 
 namespace Twitchbot.Common.Base.Client
 {
+    /// <summary>
+    /// Provides method to perform an http request.
+    /// </summary>
     public class ApiClient : IApiClient
     {
         private readonly HttpClient _client;
@@ -17,6 +20,11 @@ namespace Twitchbot.Common.Base.Client
         private readonly IStringLocalizer<ApiClient> _localizer;
         private List<string> ListAuthHeaders { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="ApiClient"/>.
+        /// </summary>
+        /// <param name="logger">The instance of <see cref="ILogger{TCategoryName}"/>.</param>
+        /// <param name="localizer">The instance of <see cref="IStringLocalizer{T}"/></param>
         public ApiClient(ILogger<ApiClient> logger, IStringLocalizer<ApiClient> localizer)
         {
             _logger = logger;
@@ -29,6 +37,15 @@ namespace Twitchbot.Common.Base.Client
             };
         }
 
+        /// <summary>
+        /// Performs an http request.
+        /// </summary>
+        /// <typeparam name="TOut">The model result.</typeparam>
+        /// <param name="uri">The uri with the endpoint.</param>
+        /// <param name="method">The <see cref="HttpMethod"/>.</param>
+        /// <param name="content">The body.</param>
+        /// <param name="headers">All the headers.</param>
+        /// <returns>The result with the model, errors or business message.</returns>
         public async Task<HttpResultModel<TOut>> PerformRequest<TOut>(string uri, HttpMethod method, object content = default, Dictionary<string, string> headers = default) where TOut : class
         {
             _logger.LogInformation("Request. Uri: {0}", uri);
