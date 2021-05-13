@@ -8,6 +8,7 @@
         <PackageDescription>Base of Twitchbot</PackageDescription>
         <RepositoryUrl>https://github.com/TwitchbotJyben/Twitchbot.Common.Base</RepositoryUrl>
         <ProjectGuid>{1a335c5b-80c2-419a-846e-7ceb1e355bd9}</ProjectGuid>
+        <UserSecretsId>7d3a0f47-05ab-4582-8f27-890c71dac9e5</UserSecretsId>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="10.1.1" />
@@ -19,9 +20,11 @@
         <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
         <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.3" />
-        <PackageReference Include="Twitchbot.Common.Models" Version="1.0.9" />
+        <PackageReference Include="Twitchbot.Common.Models" Version="1.0.10" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Test\" />
+      <Folder Include="Helpers\" />
+      <Folder Include="Attributes\" />
     </ItemGroup>
 </Project>
